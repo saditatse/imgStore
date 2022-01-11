@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Contact Record App</title>
+        <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/9/93/Google_Contacts_icon.svg" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href="main.css"> -->
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+a{
+    color: #000;
+    text-decoration: none;
+}
+.main-container{
+    margin: 0px auto;
+    padding: 25px;
+    border-radius: 5px;
+}
+.record-input, .record-display{
+    border-radius: 10px;
+    padding: 20px 0;
+    margin: 30px 0;
+    box-shadow: 0px 0px 6px 0px rgba(8, 0, 8, 1);
+    -webkit-box-shadow: 0px 0px 6px 0px rgba(8, 0, 8, 1);
+    -moz-box-shadow: 0px 0px 6px 0px rgba(8, 0, 8, 1);
+}
+.record-input > h2, .record-display > h2{
+    padding: 10px 0;
+    text-align: center;
+    font-size: 22px;
+}
+.record-input{
+    color: #000;
+    background: #f0f0f0;
+}
+.record-display{
+    background: #e52165;
+    color: #fff;
+    position: relative;
+}
+
+
+/** record input **/
+.entry-form{
+    padding: 10px 0;
+}
+ form{
+     display: flex;
+     flex-direction: column;
+     width: 75%;
+     margin: 0 auto;
+ }
+ form label{
+     font-weight: 500;
+     opacity: 0.7;
+ }
+ form label, form input{
+     display: block;
+     outline: none;
+     border-radius: 25px;
+     border: none;
+ }
+ form input[type = "text"], form input[type = "number"]{
+     color: #000;
+     font-family: inherit;
+     font-size: 16px;
+     padding: 10px 18px;
+     margin: 12px 0;
+     transition: all 0.5s ease;
+ }
+ form input:focus{
+     background: #252525;
+     color: #fff;
+ }
+
+ .message{
+     text-align: center;
+     display: block;
+     width: 50%;
+     margin: 10px auto;
+     font-size: 14px;
+     color: #fff;
+     border-radius: 5px;
+     padding: 10px 0;
+     visibility: hidden;
+ }
+
+ /******* alert types *****/
+ .error{
+     background: #f32013;
+     visibility: visible;
+ }
+ .success{
+     background: #4bb543;
+     visibility: visible!important;
+ }
+
+ /**********************************************/
+ .input-btns{
+     text-align: center;
+ }
+
+ /*** utility button styling ***/
+ button{
+     display: block;
+     width: 160px;
+     margin: 20px auto;
+     font-size: 15px;
+     font-weight: 500;
+     font-family: inherit;
+     padding: 10px;
+     border: 3px solid #fff;
+     border-radius: 25px;
+     color: #fff;
+     background: #000411;
+     cursor: pointer;
+     opacity: 0.8;
+     transition: all 0.5s ease;
+     outline: none;
+ }
+
+ button:hover{
+     opacity: 1;
+ }
+
+ #submit-btn span, #cancel-btn span{
+     padding-right: 5px;
+ }
+
+ #reset-btn{
+     position: absolute;
+     right: 25px;
+     top: 10px;
+     width: 120px;
+ }
+
+ /*****************************************/
+ .record-display{
+     padding: 30px 40px;
+ }
+ .record-el{
+     display: block;
+     padding: 4px 0;
+     text-align: center;
+     opacity: 0.9;
+ }
+
+ #labelling{
+     font-weight: 700;
+ }
+ .record-item{
+     color: #000;
+     border-radius: 10px;
+     padding: 10px 25px;
+     margin: 15px 0;
+     background: #fff;
+     box-shadow: 0 0 6px #777;
+ }
+
+ #delete-btn span{
+     padding-right: 5px;
+ }
+.title{
+    text-align: center;
+    letter-spacing: .5em;
+}
+ /*********** Media Queries *************/
+
+ @media screen and (min-width: 992px){
+     .main-container{
+         display: grid;
+         grid-template-columns: 1fr 2fr;
+         width: 90vw;
+         grid-column-gap: 30px;
+     }
+     .record-input{
+         height: 700px;
+     }
+     .record-container{
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         grid-gap: 30px;
+     }
+ }
+        </style>
+        <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+    </head>
+    <body>        
+       <!-- <h1 class="title">Free for Any<img height="30" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Google_Contacts_icon.svg/1024px-Google_Contacts_icon.svg.png" alt=""></h1>-->
+        <div class = "main-container">
+            <!-- input record -->
+            <div class = "record-input">
+                <h2>Contact Details</h2>
+                <div class = "entry-form">
+                    <form>
+                        <label for = "name">Name</label>
+                        <input type = "text" id = "name">
+
+                        <label for = "address">Address</label>
+                        <input type = "text" id = "address">
+
+                        <label for = "contact-num">Contact Number</label>
+                        <input type = "text" id = "contact-num">
+                    </form>
+
+                    <!-- alert message -->
+                    <span class = "message"></span>
+
+                    <div class = "input-btns">
+                        <button type = "submit" id = "submit-btn">
+                            <span>
+                                <i class = "fas fa-plus"></i>
+                            </span> Add Contact
+                        </button>
+
+                        <button type = "button" id = "cancel-btn">
+                            <span>
+                                <i class = "fas fa-times"></i>
+                            </span> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- display record -->
+            <div class = "record-display">
+                <h2>Available Contacts: </h2>
+                <!-- reset btn -->
+                <button type = "button" id = "reset-btn">
+                    Reset
+                </button>
+
+                <div class = "record-container">
+                    <!-- single record -->
+                    <!--
+                    <div class = "record-item">
+                        <div class = "record-el">
+                            <span id = "labelling">Contact ID: </span>
+                            <span id = "contact-id-content">1</span>
+                        </div>
+
+                        <div class = "record-el">
+                            <span id = "labelling">Name: </span>
+                            <span id = "name-content">John Doe</span>
+                        </div>
+
+                        <div class = "record-el">
+                            <span id = "labelling">Address: </span>
+                            <span id = "address-content">Ohio</span>
+                        </div>
+
+                        <div class = "record-el">
+                            <span id = "labelling">Contact Number: </span>
+                            <span id = "contact-num-content">123-456-7890</span>
+                        </div>
+
+                        <button type = "button" id = "delete-btn">
+                            <span>
+                                <i class = "fas fa-trash"></i>
+                            </span> Delete
+                        </button>
+                    </div>
+                    -->
+                    <!-- end of single record -->
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- JS file -->
+        <!-- <script src = "script.js"></script> -->
+        <script>
+            
+
+const addBtn = document.getElementById('submit-btn');
+const cancelBtn = document.getElementById('cancel-btn');
+const resetBtn = document.getElementById('reset-btn');
+const recordContainer = document.querySelector('.record-container');
+const deleteBtn = document.getElementById('delete-btn');
+
+/************************************************ */
+const name = document.getElementById('name');
+const address = document.getElementById('address');
+const number = document.getElementById('contact-num');
+
+let ContactArray = [];
+let id = 0;
+
+
+// Object constructor for Contact
+function Contact(id, name, address, number){
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.number = number;
+}
+
+// Display available record
+document.addEventListener('DOMContentLoaded', function(){
+    if(localStorage.getItem('contacts') == null){
+        ContactArray = [];
+    } else {
+        ContactArray = JSON.parse(localStorage.getItem('contacts'));
+        lastID(ContactArray);
+    }
+    displayRecord();
+});
+
+// Display Function
+function displayRecord(){
+    ContactArray.forEach(function(singleContact){
+        addToList(singleContact);
+    });
+}
+
+// Finding the last id
+function lastID(ContactArray){
+    if(ContactArray.length > 0){
+        id = ContactArray[ContactArray.length - 1].id;
+    } else {
+        id = 0;
+    }
+}
+
+// Adding contact record
+
+addBtn.addEventListener('click', function(){
+    if(checkInputFields([name, address, number])){
+        setMessage("success", "Record added successfully!");
+        id++;
+        const contact = new Contact(id, name.value, address.value, number.value);
+        ContactArray.push(contact);
+        // Storing contact record in local storage
+        localStorage.setItem('contacts', JSON.stringify(ContactArray));
+        clearInputFields();
+
+        // Adding to list
+        addToList(contact);
+    } else {
+        setMessage("error", "Empty input fields or invalid input!");
+    }
+    
+});
+
+// Adding to List (on the DOM)
+    function addToList(item){
+        const newRecordDiv = document.createElement('div');
+        newRecordDiv.classList.add('record-item');
+        newRecordDiv.innerHTML = `
+        <div class = "record-el">
+            <span id = "labelling">Contact ID: </span>
+            <span id = "contact-id-content">${item.id}</span>
+        </div>
+
+        <div class = "record-el">
+            <span id = "labelling">Name: </span>
+            <span id = "name-content">${item.name}</span>
+        </div>
+
+        <div class = "record-el">
+            <span id = "labelling">Address: </span>
+            <span id = "address-content">${item.address}</span>
+        </div>
+
+        <div class = "record-el">
+            <span id = "labelling">Contact Number: </span>
+            <span id = "contact-num-content"><a href="tel:${item.number}">${item.number}</a></span>
+        </div>
+
+        <button type = "button" id = "delete-btn">
+            <span>
+                <i class = "fas fa-trash"></i>
+            </span> Delete
+        </button>
+        `;
+        recordContainer.appendChild(newRecordDiv);
+    }
+
+// Deletion of record
+recordContainer.addEventListener('click', function(event){
+    //console.log(event.target);
+    if(event.target.id === 'delete-btn'){
+        // removing from DOM
+        let recordItem = event.target.parentElement;
+        recordContainer.removeChild(recordItem);
+        let tempContactList = ContactArray.filter(function(record){
+            return (record.id !== parseInt(recordItem.firstElementChild.lastElementChild.textContent));
+        });
+        ContactArray = tempContactList;
+        //removing from localstorage by overwriting
+        localStorage.setItem('contacts', JSON.stringify(ContactArray));
+    }
+});
+
+// resetting everything (id will get set to 0)
+resetBtn.addEventListener('click', function(){
+    ContactArray = [];
+    localStorage.setItem('contacts', JSON.stringify(ContactArray));
+    location.reload();
+})
+
+// Displaying status/alerts
+function setMessage(status, message){
+    let messageBox = document.querySelector('.message');
+    if(status == "error"){
+        messageBox.innerHTML = `${message}`;
+        messageBox.classList.add('error');
+        removeMessage(status, messageBox);
+    }
+    if(status == "success"){
+        messageBox.innerHTML = `${message}`;
+        messageBox.classList.add('success');
+        removeMessage(status, messageBox);
+    }
+}
+
+// Clearing all input fields
+cancelBtn.addEventListener('click', function(){
+    clearInputFields();
+});
+
+function clearInputFields(){
+    name.value = "";
+    address.value = "";
+    number.value = "";
+}
+
+// Removing status/alerts
+function removeMessage(status, messageBox){
+    setTimeout(function(){
+        messageBox.classList.remove(`${status}`);
+    }, 2000);
+}
+
+// Input field validation
+function checkInputFields(inputArr){
+    for(let i = 0; i < inputArr.length; i++){
+        if(inputArr[i].value === ""){
+            return false;
+        }
+    }
+    if(!phoneNumCheck(inputArr[2].value)){
+        return false;
+    }
+    return true;
+}
+
+// Phone number validation function 
+function phoneNumCheck(inputtxt){
+    let phoneNo = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if(inputtxt.match(phoneNo)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Works for the following formats: 
+// XXX-XXX-XXXX
+// XXX.XXX.XXXX
+// XXX XXX XXXX
+
+        </script>
+    </body>
+</html>
